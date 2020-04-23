@@ -1,3 +1,5 @@
+require 'pry'
+
 # Write your code below game_hash
 def game_hash
   {
@@ -127,3 +129,84 @@ def game_hash
 end
 
 # Write code here
+def num_points_scored(player)
+  game_hash.each do |home_or_away|
+    home_or_away[1][:players].each do |player_info|
+      if player_info[:player_name] == player
+        return player_info[:points]
+      end
+    end
+  end
+end
+
+def shoe_size(player)
+  game_hash.each do |home_or_away|
+    home_or_away[1][:players].each do |player_info|
+      if player_info[:player_name] == player
+        return player_info[:shoe]
+      end
+    end
+  end
+end
+
+def team_colors(team)
+  game_hash.each do |home_or_away|
+    if home_or_away[1][:team_name] == team
+      return home_or_away[1][:colors]
+    end
+  end
+end
+
+def team_names
+  teams = []
+  game_hash.each do |home_or_away|
+    teams << home_or_away[1][:team_name]
+  end
+  teams
+end
+
+def player_numbers(team)
+  game_hash.each do |home_or_away|
+    if home_or_away[1][:team_name] == team
+      player_numbers_array = []
+      home_or_away[1][:players].each do |player_info|
+        player_numbers_array << player_info[:number]
+      end
+      return player_numbers_array
+    end
+  end
+end
+
+def player_stats(player)
+  game_hash.each do |home_or_away|
+    home_or_away[1][:players].each do |player_info|
+      if player_info[:player_name] == player
+        return player_info
+      end
+    end
+  end
+end
+
+def biggest_shoe
+  biggest_shoe_size ||= 0
+  biggest_shoe_player ||= ""
+  game_hash.each do |home_or_away|
+    home_or_away[1][:players].each do |player_info|
+      if player_info[:shoe] > biggest_shoe_size
+        biggest_shoe_size = player_info[:shoe]
+        biggest_shoe_player = player_info[:player_name]
+      end
+    end
+  end
+  return biggest_shoe_player
+end
+
+def big_shoe_rebounds
+  game_hash.each do |home_or_away|
+    home_or_away[1][:players].each do |player_info|
+      if player_info[:player_name] == biggest_shoe
+        return player_info[:rebounds]
+      end
+    end
+  end
+end
