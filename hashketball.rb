@@ -1,4 +1,7 @@
 # Write your code below game_hash
+
+require "pry";
+
 def game_hash
   {
     home: {
@@ -127,3 +130,184 @@ def game_hash
 end
 
 # Write code here
+
+def num_points_scored (player_name)
+  not_found = "Sorry, could not find #{player_name}. Please try again."
+  game_hash.each_key { |location| 
+    game_hash[location][:players].map { |player|
+      if player[:player_name] == player_name 
+        return player[:points];
+      end
+    }
+  }
+  not_found; 
+end
+
+def shoe_size (player_name)
+  game_hash.each_key { |location| 
+    game_hash[location][:players].map { |player|
+      if player[:player_name] == player_name
+        return player[:shoe];
+      end
+    }
+  }
+  #a not found entry. 
+end
+
+def team_colors (team_name)
+  game_hash.each_key { |location|
+    if game_hash[location][:team_name] == team_name
+      return game_hash[location][:colors];
+    end
+  }
+end
+
+def team_names
+  all_teams = [];
+  game_hash.each_key { |location|
+    all_teams << game_hash[location][:team_name];
+  }
+  all_teams;
+end
+
+team_names;
+
+def player_numbers (team_name)
+  all_jersies = [];
+  game_hash.each_key { |location|
+    if game_hash[location][:team_name] == team_name
+      game_hash[location][:players].length.times { |player_index|
+        all_jersies << game_hash[location][:players][player_index][:number];
+      }
+    end
+  }
+  all_jersies; 
+end
+
+def player_stats (player_name)
+  game_hash.each_key { |location| 
+    game_hash[location][:players].map { |player|
+      if player[:player_name] == player_name 
+        return player; 
+      end
+    }
+  }
+end
+
+def big_shoe_rebounds
+  big_shoe = 0;
+  rebounds = 0; 
+  game_hash.each_key { |location|
+    game_hash[location][:players].map { |player|
+      if big_shoe == 0
+        big_shoe = player[:shoe];
+        rebounds = player[:rebounds];
+      elsif big_shoe < player[:shoe]
+        big_shoe = player[:shoe];
+        rebounds = player[:rebounds];
+      end
+    }
+  }
+  rebounds; 
+end
+
+#1. Which player has the most points? Call the method `most_points_scored`.
+
+#2. Which team has the most points? Call the method `winning_team`.
+
+#3. Which player has the longest name? Call the method `player_with_longest_name`.
+
+#**Super Bonus:**
+
+#1. Write a method that returns true if the player with the longest name had the
+#   most steals. Call the method `long_name_steals_a_ton?`.
+
+def most_points_scored
+  points = 0;
+  player_name = ""; 
+  game_hash.each_key { |location|
+    game_hash[location][:players].map { |player|
+      if points == 0
+        points = player[:points];
+        player_name = player[:player_name];
+      elsif points < player[:points]
+        points = player[:points];
+        player_name = player[:player_name];
+      end
+    }
+  }
+  player_name; 
+end #=> "Ben Gordon"
+
+def winning_team
+  points_home = 0;
+  points_away = 0; 
+  game_hash.each_key { |location|
+    game_hash[location][:players].map { |player|
+      if location == :home
+        points_home = points_home + player[:points];
+      elsif location == :away
+        points_away = points_away + player[:points];
+      end
+    }
+  }
+  case
+  when points_home > points_away
+    return game_hash[:home][:team_name];
+  when points_away > points_home
+    return game_hash[:away][:team_name];
+  when points_home == points_away
+    "It's a tie!"
+  end
+end #=> "Brooklyn Nets"
+
+def player_with_longest_name
+  name_length = 0;
+  player_name = ""; 
+  game_hash.each_key { |location|
+    game_hash[location][:players].map { |player|
+      if name_length == 0
+        name_length = player[:player_name].length;
+        player_name = player[:player_name];
+      elsif name_length < player[:player_name].length
+        name_length = player[:player_name].length;
+        player_name = player[:player_name];
+      end
+    }
+  }
+  player_name; 
+end #=> "Bismack Biyombo"
+
+def long_name_steals_a_ton 
+  name_length = 0;
+  steals = 0; 
+  most_steals = 0;
+  player_name_long = ""; 
+  player_name_steals = "";
+  game_hash.each_key { |location|
+    game_hash[location][:players].map { |player|
+      if name_length == 0
+        name_length = player[:player_name].length;
+        player_name_long = player[:player_name];
+        steals = player[:steals];
+      elsif name_length < player[:player_name].length
+        name_length = player[:player_name].length;
+        player_name_long = player[:player_name];
+        steals = player[:steals];
+      end
+    }
+  }
+  game_hash.each_key { |location|
+    game_hash[location][:players].map { |player|
+      if most_steals == 0
+        most_steals = player[:steals];
+        player_name_steals = player[:player_name];
+      elsif most_steals < player[:steals]
+        most_steals = player[:steals];
+        player_name_steals = player[:player_name];
+      end
+    }
+  }
+  player_name_long == player_name_steals ? true : false;   
+end #=> true
+
