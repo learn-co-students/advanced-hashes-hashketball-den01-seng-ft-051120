@@ -126,18 +126,18 @@ def game_hash
   }
 end
 
-def num_points_scored(player_n)
+def num_points_scored(player_a)
   game_hash.each do |home_away, keys|
     keys[:players].each do |player|
-      return player[:points] if player[:player_name] == player_n
+      return player[:points] if player[:player_name] == player_a
     end
   end
 end
 
-def shoe_size(player_n)
+def shoe_size(player_a)
   game_hash.each do |home_away, keys|
     keys[:players].each do |player|
-      return player[:shoe] if player[:player_name] == player_n
+      return player[:shoe] if player[:player_name] == player_a
     end
   end
 end
@@ -163,10 +163,10 @@ def player_numbers(team_name)
   end
 end
 
-def player_stats(player_n)
+def player_stats(player_a)
   game_hash.each do |home_away, keys|
     keys[:players].each do |player|
-      if player[:player_name] == player_n
+      if player[:player_name] == player_a
         return player
       end
     end
