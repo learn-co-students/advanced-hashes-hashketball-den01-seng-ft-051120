@@ -152,7 +152,18 @@ def team_colors(team_search)
 end
 
 def team_names
-  game_hash.map {|home_away, team_colors_players| team_colors_players[:team_name]}
+  game_hash.map {|home_away, keys| keys[:team_name]}
+end
+
+def player_numbers(team_search)
+  game_hash.each do |home_away, team_colors_players|
+    if team_colors_players[:team_name] == team_search
+      return team_colors_players[:players].map do |player| 
+        player[:number] 
+      end
+    end
+  game_hash.map {|home_away, keys| keys[:team_name]}
+  end
 end
 
 def player_numbers(team_search)
@@ -174,8 +185,8 @@ end
 def big_shoe_rebounds
   biggest = 0
   rebounds = 0
-  game_hash.each do |home_away, team_colors_players|
-    team_colors_players[:players].each do |player|
+  game_hash.each do |home_away, keys|
+    keys[:players].each do |player|
       size = player[:shoe]
       if size > biggest
         biggest = size
