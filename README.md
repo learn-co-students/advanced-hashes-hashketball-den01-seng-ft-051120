@@ -106,26 +106,19 @@ way software is "grown" in the real world.
 
 ### Additional Methods
 
-* Build a method, `shoe_size`, that takes in an argument of a player's name and
-  returns the shoe size for that player.
+* Build a method, `shoe_size`, that takes in an argument of a player's name and returns the shoe size for that player.
 
-  * Think about how you will find the shoe size of the correct player. How can
-    you check and see if a player's name matches the name that has been passed
-    into the method as an argument?
+  * Think about how you will find the shoe size of the correct player. How can you check and see if a player's name matches the name that has been passed into the method as an argument?
 
-* Build a method, `team_colors`, that takes in an argument of the team name and
-  returns an `Array` of that team's colors.
+* Build a method, `team_colors`, that takes in an argument of the team name and returns an `Array` of that team's colors.
 
-* Build a method, `team_names`, that operates on the game `Hash` to return an
-  `Array` of the team names.
+* Build a method, `team_names`, that operates on the game `Hash` to return an `Array` of the team names.
 
-* Build a method, `player_numbers`, that takes in an argument of a team name and
-  returns an `Array` of the jersey numbers for that team.
+* Build a method, `player_numbers`, that takes in an argument of a team name and returns an `Array` of the jersey numbers for that team.
 
-* Build a method, `player_stats`, that takes in an argument of a player's name
-  and returns a hash of that player's stats.
+* Build a method, `player_stats`, that takes in an argument of a player's name and returns a hash of that player's stats.
 
-  * Check out the following example of the expected return value of the
+* Check out the following example of the expected return value of the
     `player_stats` method:
 
   ```bash
@@ -141,8 +134,7 @@ way software is "grown" in the real world.
       }
   ```
 
-* Build a method, `big_shoe_rebounds`, that will return the number of rebounds
-  associated with the player that has the largest shoe size. Break this one down
+* Build a method, `big_shoe_rebounds`, that will return the number of rebounds associated with the player that has the largest shoe size. Break this one down
   into steps:
 
   * First, find the player with the largest shoe size
