@@ -131,6 +131,27 @@ end
 
 # Write code here
 
+def player_array 
+  all_players = [];
+  game_hash.each_pair { |h_or_a, info|
+    info[:players].map { |player|
+      player[:location] = h_or_a.to_s;
+      player[:team_name] = game_hash[h_or_a][:team_name];
+      player[:team_colors] = game_hash[h_or_a][:colors];
+      all_players << player;
+    }
+  }
+  all_players;
+end
+
+def num_points_scored (player_name)
+  player_array.map { |player|
+    if player[:player_name] === player_name
+      return player[:points];
+    end
+  }
+end
+=begin
 def num_points_scored (player_name)
   not_found = "Sorry, could not find #{player_name}. Please try again."
   game_hash.each_key { |location| 
@@ -142,7 +163,16 @@ def num_points_scored (player_name)
   }
   not_found; 
 end
+=end 
 
+def shoe_size (player_name)
+  player_array.map { |player|
+    if player[:player_name] === player_name
+      return player[:shoe];
+    end 
+  }
+end
+=begin
 def shoe_size (player_name)
   game_hash.each_key { |location| 
     game_hash[location][:players].map { |player|
@@ -153,7 +183,16 @@ def shoe_size (player_name)
   }
   #a not found entry. 
 end
+=end
 
+def team_colors (team_name)
+  game_hash.each_pair { |location, team_info|
+    if team_info[:team_name] === team_name
+      return team_info[:colors];
+    end
+  }
+end
+=begin
 def team_colors (team_name)
   game_hash.each_key { |location|
     if game_hash[location][:team_name] == team_name
@@ -161,7 +200,27 @@ def team_colors (team_name)
     end
   }
 end
+=end
 
+=begin
+def team_names
+  trial = [];
+  game_hash.each_value.select{ |key, value|
+    binding.pry; 
+  }
+end
+puts team_names;
+=end
+def team_names
+  all_teams = [];
+  game_hash.map { |key, value|
+    value.map { |key, value| 
+      if key === :team_name then all_teams << value end 
+    }
+  }
+  all_teams;
+end
+=begin
 def team_names
   all_teams = [];
   game_hash.each_key { |location|
@@ -169,8 +228,7 @@ def team_names
   }
   all_teams;
 end
-
-team_names;
+=end
 
 def player_numbers (team_name)
   all_jersies = [];
@@ -252,12 +310,12 @@ def winning_team
     }
   }
   case
-  when points_home > points_away
-    return game_hash[:home][:team_name];
-  when points_away > points_home
-    return game_hash[:away][:team_name];
-  when points_home == points_away
-    "It's a tie!"
+    when points_home > points_away
+      return game_hash[:home][:team_name];
+    when points_away > points_home
+      return game_hash[:away][:team_name];
+    when points_home == points_away
+      "It's a tie!"
   end
 end #=> "Brooklyn Nets"
 
