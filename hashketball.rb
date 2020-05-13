@@ -128,53 +128,46 @@ def game_hash
   }
 end
 
+def players
+  home_p = game_hash[:home][:players]
+  away_p = game_hash[:away][:players]
+  home_p.concat away_p
+end
+
+def get_player player_name
+  players.find { |player| player[:player_name] == player_name}             
+end
+
+def get_team team_name
+  team_name.find { |team| team[:team_name] == team} 
+end
 # Write code here
-def num_points_scored(player)
-  game_hash.each_key do |ha|
-    game_hash[ha][:players].each_entry do |playerhash|
-      if playerhash[:player_name] == player
-        return playerhash[:points]
-      end
-    end
-  end
+def num_points_scored player          
+  get_player(player)[:points]
 end
 
-def shoe_size(player)
-  game_hash.each_key do |ha|
-    game_hash[ha][:players].each_entry do |playerhash|
-      if playerhash[:player_name] == player
-        return playerhash[:shoe]
-      end
-    end
-  end
+def shoe_size player
+  get_player(player)[:shoe]
 end
 
-def team_colors(team)
-  game_hash.each_key do | ha|
-    if game_hash[ha][:team_name] == team
-      return game_hash[ha][:colors]
-    end
-  end
+def team_colors team_name
+  get_team(team_name)[:colors]
 end
 
 def team_names
-  res = []
   # generalizable beause there's always going to be home/away teams
-  res.push(game_hash[:home][:team_name])
-  res.push(game_hash[:away][:team_name])
-  res
+  [
+    game_hash[:home][:team_name],
+    game_hash[:away][:team_name],
+  ]
 end
 
-def player_numbers(team)
-  res = []
-  game_hash.each_key do |ha|
-    if game_hash[ha][:team_name] == team
-      game_hash[ha][:players].each_entry do |playerhash|
-        res.push(playerhash[:number])
-      end
-    end
-  end
-  res
+def get_players_by_team team_name
+  get_team(team_name)[:players]
+end
+
+def player_numbers team_name
+  get_players_by_team(team_name).map { |player| player[:number] }
 end
 
 def player_stats(player)
