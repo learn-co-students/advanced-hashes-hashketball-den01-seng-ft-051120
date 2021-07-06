@@ -1,4 +1,6 @@
 # Write your code below game_hash
+require 'pry'
+
 def game_hash
   {
     home: {
@@ -126,4 +128,74 @@ def game_hash
   }
 end
 
+def players
+  home_p = game_hash[:home][:players]
+  away_p = game_hash[:away][:players]
+  home_p.concat away_p
+end
+
+def get_player player_name
+  players.find { |player| player[:player_name] == player_name}             
+end
+
+def get_team team_name
+  team_name.find { |team| team[:team_name] == team} 
+end
 # Write code here
+def num_points_scored player          
+  get_player(player)[:points]
+end
+
+def shoe_size player
+  get_player(player)[:shoe]
+end
+
+def team_colors team_name
+  get_team(team_name)[:colors]
+end
+
+def team_names
+  # generalizable beause there's always going to be home/away teams
+  [
+    game_hash[:home][:team_name],
+    game_hash[:away][:team_name],
+  ]
+end
+
+def get_players_by_team team_name
+  get_team(team_name)[:players]
+end
+
+def player_numbers team_name
+  get_players_by_team(team_name).map { |player| player[:number] }
+end
+
+def player_stats(player)
+  game_hash.each_key do |ha|
+    game_hash[ha][:players].each_entry do |playerhash|
+      if playerhash[:player_name] == player
+        return playerhash
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+  hi = -1
+  name = ""
+  game_hash.each_key do |ha|
+    game_hash[ha][:players].each_entry do |playerhash|
+      if playerhash[:shoe] > hi
+        hi = playerhash[:shoe]
+        name = playerhash[:player_name]
+      end
+    end
+  end
+  game_hash.each_key do |ha|
+    game_hash[ha][:players].each_entry do |playerhash|
+      if playerhash[:player_name] == name
+        return playerhash[:rebounds]
+      end
+    end
+  end
+end
