@@ -1,8 +1,10 @@
 # Write your code below game_hash
+require 'pry'
+
 def game_hash
   {
     home: {
-      team_name: "Brooklyn Nets",
+      team_name: ["Brooklyn Nets"],
       colors: ["Black", "White"],
       players: [
         {
@@ -63,7 +65,7 @@ def game_hash
       ]
     },
     away: {
-      team_name: "Charlotte Hornets",
+      team_name: ["Charlotte Hornets"],
       colors: ["Turquoise", "Purple"],
       players: [
         {
@@ -126,4 +128,110 @@ def game_hash
   }
 end
 
-# Write code here
+def get_player_helper(player_name)
+  game_hash.each do |home_away, team|
+    team[:players].each do |each_player|
+      if each_player[:player_name] == player_name
+        return each_player
+      end
+    end
+  end
+end
+
+def roster_help(team_name)
+  team_roster = {}
+  if game_hash[:home][:team_name][0] == team_name
+    team_roster = game_hash[:home][:players]
+  elsif game_hash[:away][:team_name][0] == team_name
+    team_roster = game_hash[:away][:players]
+  end
+  team_roster
+end
+
+def num_points_scored(player_name)
+  player_stats = get_player_helper(player_name)
+  points_scored = ''
+  player_stats.each do |stats_title, stats|
+    if stats_title == :points
+      points_scored = stats
+    end
+  end
+  points_scored
+end
+
+def shoe_size(player_name)
+  player_stats = get_player_helper(player_name)
+  player_shoe = ''
+  player_stats.each do |stats_title, stats|
+    if stats_title == :shoe
+      player_shoe = stats
+    end
+  end
+  player_shoe
+end
+
+
+def team_colors(team_name)
+  if game_hash[:home][:team_name][0] == team_name
+    team_color = game_hash[:home][:colors]
+  elsif game_hash[:away][:team_name][0] == team_name
+    team_color = game_hash[:away][:colors]
+  end
+  team_color
+end
+
+def team_names
+  team_names = []
+  game_hash.each do |home_away, team_stats|
+     team_names << team_stats[:team_name][0]
+  end
+  team_names
+end
+
+def player_numbers(team_name)
+  player_numbers = []
+  roster = roster_help(team_name)
+  roster.each do |players|
+    players.each do |category, stats|
+      if category == :number
+        player_numbers.push(stats)
+      end
+    end
+  end
+  player_numbers
+end
+
+
+
+def player_stats(player_name)
+  stats_by_name = {}
+  full_player = get_player_helper(player_name)
+   full_player.each do |category, stats|
+     puts category
+
+     #if category != :player_name
+    stats_by_name[category] = stats
+     #end
+
+     end
+   stats_by_name
+end
+
+puts player_stats('Alan Anderson')
+
+def big_shoe_rebounds
+  largest = 0
+  rebounds = 0
+  game_hash.each do |home_away, team|
+    team[:players].each do |each_player|
+      #puts each_player[:shoe]
+      if each_player[:shoe] > largest
+        largest = each_player[:shoe]
+      end
+      if each_player[:shoe] == largest
+         rebounds = each_player[:rebounds]
+      end
+    end
+  end
+  rebounds
+end
